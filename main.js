@@ -1,20 +1,20 @@
-function normalizeURL(urlString) {
-    url = new URL(urlString)
-    url1 = `${url.hostname}${url.pathname}`
-    if (url1.length > 0 && url1.slice(-1) === '/') {
-        return url1.slice(0, -1)
+const { crawlPage } = require('./crawl.js')
+
+function main () {
+    if (process.argv.length < 3) {
+        console.log('no website provided')
+        process.exit(1)
     }
-    return url1
+    
+    if (process.argv.length > 3) {
+        console.log('too many args')
+        process.exit(1)
+    }
+
+    const baseURL = process.argv[2]
+
+    console.log(`starting crawl of ${baseURL}`)
+    crawlPage(baseURL)
 }
 
-function test(normalizeURL) {
-    const input = 'https://blog.boot.dev/path/'
-    const actual = normalizeURL(input)
-    const expected = 'blog.boot.dev/path'
-    if (actual !== expected) {
-        return "No"
-    }
-    return 'Yes'
-}
-
-console.log(test(normalizeURL))
+main()
